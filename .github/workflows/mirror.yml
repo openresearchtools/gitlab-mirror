@@ -1,0 +1,96 @@
+name: Sync GitLab mirrors
+
+on:
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gitlab-mirrors
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    if: >-
+      github.repository_id == '1381750413' &&
+      github.repository_owner_id == '229047507' &&
+      github.ref == 'refs/heads/main' &&
+      github.actor == 'openresearchtools' &&
+      github.triggering_actor == 'openresearchtools' &&
+      (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: gitlab-mirrors
+    permissions:
+      contents: read
+    outputs:
+      checked: ${{ steps.sync.outputs.checked }}
+      updated: ${{ steps.sync.outputs.updated }}
+      errors: ${{ steps.sync.outputs.errors }}
+    steps:
+      - name: Check out the trusted automation commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          submodules: false
+          lfs: false
+      - name: Test mirror safety without the GitLab secret
+        run: python3 -m unittest -v test_mirror.py test_security.py
+      - name: Sync approved mirrors
+        id: sync
+        env:
+          MIRROR_GITLAB_TOKEN: ${{ secrets.MIRROR_GITLAB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GIT_TERMINAL_PROMPT: '0'
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_CONFIG_NOSYSTEM: '1'
+          GIT_ASKPASS: ${{ github.workspace }}/git-askpass.py
+        run: python3 mirror.py
+
+  record-status:
+    name: Record sync status
+    needs: mirror
+    if: >-
+      always() && needs.mirror.result != 'skipped' &&
+      github.repository_id == '1381750413' &&
+      github.ref == 'refs/heads/main' &&
+      github.actor == 'openresearchtools' &&
+      github.triggering_actor == 'openresearchtools' &&
+      (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    # Separate runner: this job never receives the GitLab environment or secret.
+    permissions:
+      contents: write
+    steps:
+      - name: Update status branch and keep the public schedule active
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SYNC_RESULT: ${{ needs.mirror.result }}
+          CHECKED: ${{ needs.mirror.outputs.checked }}
+          UPDATED: ${{ needs.mirror.outputs.updated }}
+          ERRORS: ${{ needs.mirror.outputs.errors }}
+        run: |
+          python3 - <<'PY'
+          import base64, datetime, json, os, urllib.request
+          endpoint = 'https://api.github.com/repos/openresearchtools/gitlab-mirror/contents/status.json'
+          headers = {'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json'}
+          with urllib.request.urlopen(urllib.request.Request(endpoint + '?ref=sync-status', headers=headers), timeout=30) as response:
+              previous = json.load(response)
+          report = {'checked_at': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                    'result': os.environ['SYNC_RESULT'],
+                    'run_url': 'https://github.com/openresearchtools/gitlab-mirror/actions/runs/' + os.environ['GITHUB_RUN_ID']}
+          for field in ('checked', 'updated', 'errors'):
+              value = os.environ.get(field.upper(), '')
+              report[field] = int(value) if value.isdecimal() else None
+          body = {'message': 'Record mirror sync status', 'branch': 'sync-status', 'sha': previous['sha'],
+                  'content': base64.b64encode((json.dumps(report, indent=2) + '\n').encode()).decode()}
+          with urllib.request.urlopen(urllib.request.Request(endpoint, data=json.dumps(body).encode(), headers=headers, method='PUT'), timeout=30) as response:
+              response.read()
+          print('Recorded sync result; no credentials included.')
+          PY

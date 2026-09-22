@@ -1,0 +1,142 @@
+{
+  "github_owner": "openresearchtools",
+  "github_owner_id": 229047507,
+  "gitlab_namespace_id": 142942734,
+  "mirrors": [
+    {
+      "name": "audio-toolkit",
+      "github_id": 1282292105,
+      "gitlab_id": 86765736
+    },
+    {
+      "name": "bashkitten-rust",
+      "github_id": 1377711242,
+      "gitlab_id": 86765737
+    },
+    {
+      "name": "buzzard-agent",
+      "github_id": 1351522730,
+      "gitlab_id": 86765738
+    },
+    {
+      "name": "buzzard-minijtt",
+      "github_id": 1351522726,
+      "gitlab_id": 86765739
+    },
+    {
+      "name": "buzzard-search",
+      "github_id": 1339778649,
+      "gitlab_id": 86765743
+    },
+    {
+      "name": "BuzzardOS",
+      "github_id": 1322203305,
+      "gitlab_id": 86765744
+    },
+    {
+      "name": "ComfyUI-BlenderAI-node",
+      "github_id": 1282271035,
+      "gitlab_id": 86765747
+    },
+    {
+      "name": "engine",
+      "github_id": 1163014518,
+      "gitlab_id": 86765749
+    },
+    {
+      "name": "gnozzard",
+      "github_id": 1333573945,
+      "gitlab_id": 86765752
+    },
+    {
+      "name": "llama-cpp-arm64-builds",
+      "github_id": 1250726375,
+      "gitlab_id": 86765753
+    },
+    {
+      "name": "llama-deb",
+      "github_id": 1337303987,
+      "gitlab_id": 86765755
+    },
+    {
+      "name": "lufus",
+      "github_id": 1347460299,
+      "gitlab_id": 86765759
+    },
+    {
+      "name": "openresearchtools.github.io",
+      "github_id": 1061454406,
+      "gitlab_id": 86765761
+    },
+    {
+      "name": "PDF-Markdown-Studio",
+      "github_id": 1173145661,
+      "gitlab_id": 86765762
+    },
+    {
+      "name": "PEGPU",
+      "github_id": 1255454902,
+      "gitlab_id": 86765763
+    },
+    {
+      "name": "PEGPU-machine",
+      "github_id": 1255358351,
+      "gitlab_id": 86765766
+    },
+    {
+      "name": "pi-web",
+      "github_id": 1329713827,
+      "gitlab_id": 86765767
+    },
+    {
+      "name": "Portable-Comfy",
+      "github_id": 1297698018,
+      "gitlab_id": 86765768
+    },
+    {
+      "name": "simplehf",
+      "github_id": 1340364168,
+      "gitlab_id": 86765773
+    },
+    {
+      "name": "slopperly",
+      "github_id": 1281824144,
+      "gitlab_id": 86765776
+    },
+    {
+      "name": "systematic-reviewer",
+      "github_id": 1229798163,
+      "gitlab_id": 86765778
+    },
+    {
+      "name": "torkitten",
+      "github_id": 1355237939,
+      "gitlab_id": 86765781
+    },
+    {
+      "name": "transcribeoffline",
+      "github_id": 1046550106,
+      "gitlab_id": 86765783
+    },
+    {
+      "name": "unsloth",
+      "github_id": 1325186289,
+      "gitlab_id": 86765786
+    },
+    {
+      "name": "video-toolkit",
+      "github_id": 1282291868,
+      "gitlab_id": 86765789
+    },
+    {
+      "name": "wildbuzzard-extensions",
+      "github_id": 1351588344,
+      "gitlab_id": 86765791
+    },
+    {
+      "name": "WildBuzzardRust",
+      "github_id": 1327926508,
+      "gitlab_id": 86765793
+    }
+  ]
+}
