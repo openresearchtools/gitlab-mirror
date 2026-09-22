@@ -1,1 +1,8 @@
-{"result":"awaiting first GitHub-hosted run"}
+{
+  "checked_at": "2026-09-22T14:58:39.672530+00:00",
+  "result": "success",
+  "run_url": "https://github.com/openresearchtools/gitlab-mirror/actions/runs/35743996304",
+  "checked": 27,
+  "updated": 1,
+  "errors": 0
+}
