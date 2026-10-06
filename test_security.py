@@ -38,7 +38,7 @@ class SecurityTests(unittest.TestCase):
             mirror.validate_pair(entry, repo, project)
 
     def test_exclusions_cannot_be_overridden_by_allowlist(self):
-        for name in ['apt', 'WildBuzzard', 'bashkitten', 'wildbuzzard-android', 'termux-suite', 'gitlab-mirror']:
+        for name in ['apt', 'WildBuzzard', 'wildbuzzard-android', 'termux-suite', 'gitlab-mirror']:
             with self.subTest(name=name), self.assertRaisesRegex(RuntimeError, 'Excluded'):
                 mirror.validate_pair({'name': name}, {}, {})
 

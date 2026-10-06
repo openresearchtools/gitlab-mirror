@@ -15,7 +15,7 @@ import urllib.request
 
 OWNER = 'openresearchtools'
 NAMESPACE_ID = 142942734
-EXCLUDED = {'apt', 'wildbuzzard', 'bashkitten', 'wildbuzzard-android', 'termux-suite', 'gitlab-mirror', 'github-mirror-sync'}
+EXCLUDED = {'apt', 'wildbuzzard', 'wildbuzzard-android', 'termux-suite', 'gitlab-mirror', 'github-mirror-sync'}
 CONTROLLER = 'gitlab-mirror'
 CONFIG = Path(__file__).with_name('mirrors.json')
 GL_API = 'https://gitlab.com/api/v4'
