@@ -1,8 +1,8 @@
 {
-  "checked_at": "2026-10-27T09:00:37.435073+00:00",
-  "result": "success",
-  "run_url": "https://github.com/openresearchtools/gitlab-mirror/actions/runs/40477467165",
+  "checked_at": "2026-10-28T09:41:21.806587+00:00",
+  "result": "failure",
+  "run_url": "https://github.com/openresearchtools/gitlab-mirror/actions/runs/40666010714",
   "checked": 28,
   "updated": 0,
-  "errors": 0
+  "errors": 1
 }
